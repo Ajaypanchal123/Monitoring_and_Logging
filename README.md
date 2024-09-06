@@ -1,46 +1,43 @@
-# k3d-helm
-run kubernetes cluster in codespace
+# INFO8995-observability
+run kubernetes dashboard in codespace
 
 TLDR;
 
 ```
-k3d cluster create local-k8s
-
-```
-
-To delete a cluster:
-
-```
-k3d cluster delete local-k8s
-```
-then for the kubernetes dashboard run
-
-```
-
-kubectl get nodes
-
-kubectl -n default apply -f kube/admin-user.yml
-
-helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard
-
-helm install dashboard kubernetes-dashboard/kubernetes-dashboard
-
+ansible-playbook toaster.yml
 kubectl get pods
 ```
-Then with the 0th pod, dashboard-kong-68687498db-5jk5m
+Then with the 0th pod, dashboard-kong-68687498db-5jk5m in my case run:
 
 ```
 kubectl -n default port-forward dashboard-kong-68687498db-5jk5m 8443:8443
+```
 
+You will need a bearer token to access the dashboard. Open a 2nd terminal window and run:
+
+```
 kubectl -n default create token admin-user
 ```
+
+If you need to delete a cluster and start over you can run:
+
+```
+k3d cluster delete local-k8s
+rm -rf ~/.kube
+```
+
+Then you can take it from the top.
 
 Note: This also works (faster) in vscode local with docker desktop installed. 
 
 1. From the command palette `Dev Containers: Clone Repository in Container Volume`. 
 
-2. Choose this repository `https://github.com/rhildred/k3d-helm.git`. 
+2. Choose this repository `https://github.com/rhildred/INFO8985-observability.git`. 
 
 3. Follow the steps from TLDR;
 
-My plan is to use this for a course on monitoring and logging (with open telemetry). I already used it in test with the open [telemetry demo](https://opentelemetry.io/docs/demo/kubernetes-deployment/). I am thinking that students will expose their work with [cloudflare tunnels](https://github.com/STRRL/cloudflare-tunnel-ingress-controller).
+The deliverable for the lab is to create a deployment diagram using [https://www.umletino.com/umletino.html](https://www.umletino.com/umletino.html). This can be done by dragging and dropping pods you see with the `kubectl get pods` command. A starting place would be something like this:
+
+![deployment diagram](READMEImages/deployment.png)
+
+Hopefully this is a gentle introduction to ansible and kubernetes.
