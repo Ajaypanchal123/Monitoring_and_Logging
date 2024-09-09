@@ -4,7 +4,8 @@ run kubernetes dashboard in codespace
 TLDR;
 
 ```
-ansible-playbook toaster.yml
+pip install -r requirements.txt
+ansible-playbook playbook.yml
 kubectl get pods
 ```
 Then with the 0th pod, dashboard-kong-68687498db-5jk5m in my case run:
